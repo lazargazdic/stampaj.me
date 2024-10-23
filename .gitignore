@@ -128,3 +128,36 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Angular build and cache files
+dist/
+.angular/
+
+# dependencies
+node_modules/
+
+# production
+dist/
+.angular/
+
+# misc
+package-lock.json
+yarn.lock
+npm-debug.log*
+coverage/
+.tmp/
+.out/
+.sass-cache/
+connect.lock
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE and Editor directories
+.vscode/
+
+# Environment files
+.env
