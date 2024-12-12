@@ -2,14 +2,13 @@ import express from 'express';
 import ProductModel from '../models/product';
 
 export class ProductController{
-    getProducts = (req: express.Request, res: express.Response) => {
-        ProductModel.find()
-        .then((data) => {
-            res.status(200).json(data);
-        })
-        .catch((error) => {
-            console.error("Error: ", error);
-            res.status(500).json({error: error});
-        });
-    };
+    getAllProducts = async (req: express.Request, res: express.Response) => {
+        try {
+            const products = await ProductModel.find();
+            res.status(200).json(products);
+        }
+        catch (error) {
+            res.status(500).json({ message: 'Error fetching products' });
+        }
+    }
 }

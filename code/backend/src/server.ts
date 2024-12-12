@@ -2,8 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
-import productRouter from './routers/product.router';
+
 //import path from 'path';
+
+import userRouter from './routers/user.router';
+import productRouter from './routers/product.router';
+import pricingRuleRouter from './routers/pricingRule.router';
+import orderRouter from './routers/order.router';
 
 const app = express();
 
@@ -15,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/assets", express.static('assets'));
+app.use("/images", express.static('images'));
 
 mongoose.connect('mongodb://localhost:27017/stampajME');
 const connection = mongoose.connection;
@@ -24,7 +30,10 @@ connection.once('open', () => {
 
 const router = express.Router();
 
-router.use('/products', productRouter);
+router.use('/user', userRouter);
+router.use('/product', productRouter);
+router.use('/pricingRules', pricingRuleRouter);
+router.use('/order', orderRouter);
 
 app.use('/', router);
 

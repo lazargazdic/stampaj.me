@@ -1,32 +1,38 @@
-import { NgClass, NgFor, NgIf, SlicePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
-import { provideHttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, SlicePipe],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
-
+export class HomeComponent {
+  private router = inject(Router);
   private productService = inject(ProductService);
 
-  constructor() { }
+  allProducts: Product[] = [];
+  allProductsChunks: any[] = [];
 
-  ngOnInit(): void {
-    this.productService.getAllProducts().subscribe((data) => {
-      if(data){
-        this.allProducts = data;
+  ngOnInit(): void{
+    this.productService.getAllProducts().subscribe({
+      next: (products) => {
+        this.allProducts = products;
+        this.chunkProducts(3);
+      },
+      error: (error) => {
+        alert('Error fetching products');
       }
-      else{
-        alert("Error in fetching data");
-      }
-    });
+    })
   }
 
-  allProducts : Product[] = [];
+  chunkProducts(n: number) {
+    for (let i = 0; i < this.allProducts.length; i += n) {
+      this.allProductsChunks.push(this.allProducts.slice(i, i + n));
+    }
+  }
 }

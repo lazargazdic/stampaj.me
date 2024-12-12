@@ -1,53 +1,98 @@
-<div class="container">
-  <div class="hero">
-    <div class="hero-content">
-      <h1>Dobrodošli u štampaj.me</h1>
-      <p>Štampa visokog kvaliteta po povoljnim cijenama</p>
-      <button class="btn btn-primary">Poruči ođe</button>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="">stampajME</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary nav-link text-white" routerLink="order">Order Now</a>
+        </li>
+      </ul>
     </div>
   </div>
+</nav>
 
-  <h2 class="section-header">Proizvodi koje nudimo</h2>
-  <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <!-- Group products in sets of 3 for larger screens -->
-      <div *ngFor="let group of allProducts | slice:0:allProducts.length/3; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+<!-- Hero Section -->
+<section class="hero bg-primary text-white text-center py-5">
+  <div class="container">
+    <h1 class="display-4">Your Premium Printing Partner</h1>
+    <p class="lead">Explore our high-quality printing solutions today!</p>
+    <a class="btn btn-light btn-lg mt-3" routerLink="/order">Order Now</a>
+  </div>
+</section>
+
+<div id="allProductsCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <!-- Carousel Items -->
+    <div
+      *ngFor="let chunk of allProductsChunks; let i = index"
+      class="carousel-item"
+      [class.active]="i === 0"
+    >
+      <div class="container">
         <div class="row">
-          <!-- Loop through each product and display it in a column -->
-          <div *ngFor="let product of allProducts.slice(i * 3, (i * 3) + 3)" class="col-12 col-md-4">
-            <div class="card">
-              <img src="http://localhost:4000{{product.productImage}}" class="card-img-top" alt="{{product.productImage}}">
-              <div class="card-body">
-                <h5 class="card-title">{{ product.name }}</h5>
-                <p class="card-text">{{ product.description }}</p>
+          <!-- Each Row -->
+          <div class="col-12 mb-3">
+            <div class="row">
+              <!-- Each Product Card -->
+              <div
+                class="col-md-4"
+                *ngFor="let product of chunk"
+              >
+                <div class="card shadow-sm h-100">
+                  <img
+                    src="http://localhost:4000{{product.image}}"
+                    class="card-img-top"
+                    alt="{{ product.image }}"
+                  />
+                  <div class="card-body text-center">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Carousel controls -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
   </div>
 
-
-<!--
-  <h2 class="section-header">Place Your Order</h2>
-  <form>
-    <div class="form-group">
-      <label for="name">Your Name</label>
-      <input type="text" id="name" class="form-control" placeholder="Enter your name">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit Order</button>
-  </form>
--->
+  <!-- Carousel Controls -->
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#allProductsCarousel"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#allProductsCarousel"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
